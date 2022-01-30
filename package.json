@@ -2,10 +2,11 @@
   "name": "api-games",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon",
-    "start": "node index.js"
+    "dev": "nodemon src/index.js",
+    "legacy": "nodemon src/index.legacy.js",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,14 @@
   "dependencies": {
     "body-parser": "^1.19.1",
     "dotenv-safe": "^8.2.0",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.15.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
+    "git-commit-msg-linter": "^4.0.7",
     "nodemon": "^2.0.15"
   }
 }
