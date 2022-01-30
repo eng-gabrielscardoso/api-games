@@ -12,7 +12,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res, next) => {
-  res.sendStatus(200);
+  try {
+    res.sendStatus(200);
+  } catch (e) {
+    res.sendStatus(500);
+    console.error(e);
+  };
 });
 
 app.get('/games', (req, res, next) => {
