@@ -1,0 +1,25 @@
+{
+  "games" : [
+    {
+      "id": 1,
+      "name": "GTA V",
+      "year": 2013,
+      "developer": "Rockstar Games",
+      "price": 150
+    },
+    {
+      "id": 2,
+      "name": "The Witcher 3: Wild Hunt",
+      "year": 2015,
+      "developer": "CD Project Red",
+      "price": 23.90
+    },
+    {
+      "id": 3,
+      "name": "Final Fantasy VI",
+      "year": 1994,
+      "developer": "Square Enix",
+      "price": 59.95
+    }
+  ]
+}
