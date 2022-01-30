@@ -1,6 +1,6 @@
 require('dotenv-safe').config();
 const bodyParser = require('body-parser');
-const database = require('./private/database.json');
+const database = require('../private/database.json');
 const express = require('express');
 
 const app = express();
@@ -10,8 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res, next) => {
-  res.statusCode = 200;
-  res.send('API de games. Consulte a documentação para ver os endpoints disponíveis');
+  res.sendStatus(200);
 });
 
 app.get('/games', (req, res, next) => {
