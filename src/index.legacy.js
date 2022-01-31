@@ -1,10 +1,13 @@
 require('dotenv-safe').config();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const database = require('../private/database.json');
 const express = require('express');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
