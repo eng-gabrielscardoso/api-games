@@ -21,5 +21,25 @@
       "developer": "Square Enix",
       "price": 59.95
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Gabriel Santos Cardoso",
+      "email": "gabriel@fakemail.com",
+      "password": "sukuna" 
+    },
+    {
+      "id": 2,
+      "name": "Fabiana Pantoja Barreto",
+      "email": "fabiana@fakemail",
+      "password": "suguro"
+    },
+    {
+      "id": 3,
+      "name": "Analua Pantoja Barreto",
+      "email": "analua@fakemail.com",
+      "password": "mahito" 
+    }
   ]
 }
