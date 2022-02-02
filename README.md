@@ -17,7 +17,8 @@
 
 As seguintes melhorias ainda estão em aberto:
 
-- [ ] Validação de campos de requisição
+- [ ] Endpoints para ações de usuário
+- [ ] Validação por middlewares
 - [ ] Segurança da informação
 - [ ] Sistema de logging
 
@@ -69,6 +70,8 @@ Adicione comandos de execução e exemplos que você acha que os usuários achar
 * **GET** ```/games``` : Listagem dos games cadastrados no banco de dados
 * **GET** ```/game/:id``` : Listagem de dados de um único game do banco de dados de acordo com o parâmetro ```id```
 * **POST** ```/game``` : Cadastro de um novo game no banco de dados
+* **POST** ```/user``` : Cadastro de um novo usuário no banco de dados
+* **POST** ```/auth``` : Autenticação de usuário para utilização da API com Token
 * **DELETE** ```/game/:id``` : Exclusão de dados de um único game do banco de dados de acordo com o parâmetro ```id```
 * **PUT** ```/game/:id``` : Atualização de dados de um único game do banco de dados de acordo com o parâmetro ```id```
 
