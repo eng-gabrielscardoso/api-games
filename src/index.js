@@ -2,12 +2,17 @@ require('dotenv-safe').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const connection = require('../private/connection');
 const gamesModel = require('../private/models/Games');
+const usersModel = require('../private/models/Users');
 
 const app = express();
+const jwtSecret = process.env.JWT_SECRET;
 const port = process.env.PORT || 3000;
+
+const authMiddleware = require('../middlewares/auth');
 
 app.use(cors());
 
@@ -23,7 +28,7 @@ app.get('/', (req, res, next) => {
   };
 });
 
-app.get('/games', (req, res, next) => {
+app.get('/games', authMiddleware, (req, res, next) => {
   gamesModel.findAll()
     .then(data => {
       res.statusCode = 200;
@@ -31,7 +36,7 @@ app.get('/games', (req, res, next) => {
     })
 });
 
-app.get('/game/:id', (req, res, next) => {
+app.get('/game/:id', authMiddleware, (req, res, next) => {
   let Req = parseInt(req.params.id);
 
   if (isNaN(idReq)) {
@@ -49,7 +54,71 @@ app.get('/game/:id', (req, res, next) => {
   };
 });
 
-app.post('/game', (req, res, next) => {
+app.post('/user', (req, res, next) => {
+  let nameReq = req.body.name;
+  let emailReq = req.body.email;
+  let passwordReq = req.body.password;
+
+  usersModel.create({
+    name: nameReq,
+    email: emailReq,
+    password: passwordReq,
+  })
+    .then(() => {
+      res.statusCode = 200;
+      res.json({ "success": "The user has been created" });
+    })
+    .catch(err => {
+      res.statusCode = 503;
+      res.json({ "err": "Error: " + err });
+    });
+});
+
+app.post('/auth', (req, res, next) => {
+  let emailReq = req.body.email;
+  let passwordReq = req.body.password;
+
+  if (emailReq != undefined) {
+    if (passwordReq != undefined) {
+      usersModel.findOne({
+        where: { 
+          email: emailReq,
+          password: passwordReq,
+        }
+      })
+        .then(user => {
+          jwt.sign({
+            id: user.id,
+            email: user.email,
+          },
+          jwtSecret,
+          { expiresIn: '1h' },
+          (err, token) => {
+            if (err) {
+              res.statusCode = 503;
+              res.json({ "err": "Ocorreu uma falha durante a geração do token" });
+            } else {
+              res.statusCode = 200;
+              res.json({ token: token });
+            };
+          });
+        })
+        .catch(err => {
+          res.statusCode = 401;
+          res.json({ "err": "Credenciais inválidas" });
+          console.log(err);
+        });
+    } else {
+      res.statusCode = 400;
+      res.json({ "err": "Senha inválida" });
+    };
+  } else {
+    res.statusCode = 400;
+    res.json({ "err": "E-mail inválido" });
+  };
+});
+
+app.post('/game', authMiddleware, (req, res, next) => {
   let nameReq = req.body.name;
   let yearReq = req.body.year;
   let developerReq = req.body.developer;
@@ -69,7 +138,7 @@ app.post('/game', (req, res, next) => {
     });
 });
 
-app.delete('/game/:id', (req, res, next) => {
+app.delete('/game/:id', authMiddleware, (req, res, next) => {
   let idReq = parseInt(req.params.id);
 
   if (isNaN(idReq)) {
@@ -83,7 +152,7 @@ app.delete('/game/:id', (req, res, next) => {
   };
 });
 
-app.put('/game/:id', (req, res, next) => {
+app.put('/game/:id', authMiddleware, (req, res, next) => {
   let idReq = parseInt(req.params.id);
 
   if (isNaN(idReq)) {
